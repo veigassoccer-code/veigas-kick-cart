@@ -236,11 +236,12 @@ function ProdutoPage() {
                     type="button"
                     onClick={() => setTamanhoSel(tamanho)}
                     aria-label={`Tamanho ${tamanho}`}
+                    aria-pressed={ativo}
                     className={cn(
-                      "h-12 rounded-md border text-sm font-extrabold transition-colors",
+                      "h-12 rounded-lg border text-sm font-extrabold transition-all",
                       ativo
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-card hover:border-primary",
+                        ? "border-primary bg-primary text-primary-foreground shadow-[0_0_16px_-2px_var(--color-primary)]"
+                        : "border-border bg-card text-foreground hover:border-primary",
                     )}
                   >
                     {tamanho}
@@ -271,18 +272,20 @@ function ProdutoPage() {
 
           <ul className="mt-8 space-y-3 border-t border-border pt-6 text-sm">
             <li className="flex items-center gap-3">
-              <Truck className="h-4 w-4 shrink-0 text-primary" />
-              <span className="text-muted-foreground">Frete grátis para todo o Brasil</span>
+              <Truck className="h-5 w-5 shrink-0 text-primary" />
+              <span className="font-semibold text-foreground">
+                Frete grátis para todo o Brasil
+              </span>
             </li>
             <li className="flex items-center gap-3">
-              <BadgeCheck className="h-4 w-4 shrink-0 text-primary" />
-              <span className="text-muted-foreground">
+              <BadgeCheck className="h-5 w-5 shrink-0 text-primary" />
+              <span className="font-semibold text-foreground">
                 Produto 100% original com nota fiscal
               </span>
             </li>
             <li className="flex items-center gap-3">
-              <ShieldCheck className="h-4 w-4 shrink-0 text-primary" />
-              <span className="text-muted-foreground">Pagamento seguro via Yampi</span>
+              <ShieldCheck className="h-5 w-5 shrink-0 text-primary" />
+              <span className="font-semibold text-foreground">Pagamento seguro via Yampi</span>
             </li>
           </ul>
         </div>
