@@ -54,7 +54,7 @@ function ProdutoPage() {
     },
   });
 
-  const { data: variacoes, isLoading: carregandoVariacoes } = useQuery({
+  const { data: variacoes } = useQuery({
     queryKey: ["variacoes", id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -67,11 +67,9 @@ function ProdutoPage() {
   });
 
   const mapaVariacoes = new Map((variacoes ?? []).map((v) => [v.tamanho, v]));
-  // Produto sem nenhuma variação cadastrada: todos os tamanhos 36–43 disponíveis por padrão
-  const semVariacoes = !carregandoVariacoes && (variacoes ?? []).length === 0;
   const selecionada = tamanhoSel != null ? mapaVariacoes.get(tamanhoSel) : undefined;
-  const podeComprar =
-    tamanhoSel != null && (semVariacoes || (selecionada != null && selecionada.estoque > 0));
+  // Dropshipping: estoque ilimitado — qualquer tamanho da grade libera a compra
+  const podeComprar = tamanhoSel != null;
 
   const comprar = () => {
     if (!podeComprar || !produto) return;
@@ -219,39 +217,30 @@ function ProdutoPage() {
             </p>
           </div>
 
-          {/* Seleção de tamanho */}
+          {/* Seleção de tamanho — dropshipping: grade completa sempre disponível */}
           <div className="mt-8">
             <div className="flex items-center justify-between">
               <h2 className="text-xs font-extrabold tracking-widest uppercase">
                 Selecione o tamanho
               </h2>
-              {selecionada && selecionada.estoque > 0 && (
-                <span className="text-xs font-semibold text-primary">
-                  {selecionada.estoque <= 3
-                    ? `Últimas ${selecionada.estoque} unidades!`
-                    : "Em estoque"}
-                </span>
+              {tamanhoSel != null && (
+                <span className="text-xs font-semibold text-primary">Em estoque</span>
               )}
             </div>
             <div className="mt-3 grid grid-cols-5 gap-2">
               {TAMANHOS_PADRAO.map((tamanho) => {
-                const variacao = mapaVariacoes.get(tamanho);
-                const semEstoque = !semVariacoes && (!variacao || variacao.estoque <= 0);
                 const ativo = tamanhoSel === tamanho;
                 return (
                   <button
                     key={tamanho}
                     type="button"
-                    disabled={semEstoque || carregandoVariacoes}
                     onClick={() => setTamanhoSel(tamanho)}
-                    aria-label={`Tamanho ${tamanho}${semEstoque ? " — esgotado" : ""}`}
+                    aria-label={`Tamanho ${tamanho}`}
                     className={cn(
                       "h-12 rounded-md border text-sm font-extrabold transition-colors",
                       ativo
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border bg-card hover:border-primary",
-                      semEstoque &&
-                        "cursor-not-allowed border-border/50 text-muted-foreground/40 line-through hover:border-border/50",
                     )}
                   >
                     {tamanho}
@@ -259,11 +248,6 @@ function ProdutoPage() {
                 );
               })}
             </div>
-            {tamanhoSel != null && !podeComprar && (
-              <p className="mt-2 text-xs text-muted-foreground">
-                Tamanho esgotado. Escolha outra numeração.
-              </p>
-            )}
           </div>
 
           <button
