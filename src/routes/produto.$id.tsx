@@ -40,7 +40,7 @@ function ProdutoPage() {
     queryKey: ["produto", id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("produtos" as never)
+        .from("produtos")
         .select("*")
         .eq("id", id)
         .single();
@@ -53,7 +53,7 @@ function ProdutoPage() {
     queryKey: ["variacoes", id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("variacoes" as never)
+        .from("variacoes")
         .select("*")
         .eq("produto_id", id);
       if (error) throw error;

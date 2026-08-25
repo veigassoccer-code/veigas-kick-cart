@@ -42,7 +42,7 @@ function CatalogoPage() {
     queryKey: ["produtos", "catalogo", marca ?? null, categoria ?? null],
     queryFn: async () => {
       let query = supabase
-        .from("produtos" as never)
+        .from("produtos")
         .select("*")
         .order("destaque", { ascending: false })
         .order("preco", { ascending: false });
@@ -52,6 +52,11 @@ function CatalogoPage() {
       if (error) throw error;
       return data as unknown as Produto[];
     },
+  });
+
+  const filtros = (m?: string, c?: string) => ({
+    ...(m ? { marca: m } : {}),
+    ...(c ? { categoria: c } : {}),
   });
 
   return (
@@ -73,7 +78,7 @@ function CatalogoPage() {
         <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
           <Link
             to="/catalogo"
-            search={{ categoria }}
+            search={filtros(undefined, categoria)}
             className={cn(
               "shrink-0 rounded-full border px-4 py-2 text-xs font-extrabold tracking-wider uppercase transition-colors",
               !marca
@@ -87,7 +92,7 @@ function CatalogoPage() {
             <Link
               key={m}
               to="/catalogo"
-              search={{ marca: m, categoria }}
+              search={filtros(m, categoria)}
               className={cn(
                 "shrink-0 rounded-full border px-4 py-2 text-xs font-extrabold tracking-wider uppercase transition-colors",
                 marca === m
@@ -109,7 +114,7 @@ function CatalogoPage() {
         <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
           <Link
             to="/catalogo"
-            search={{ marca }}
+            search={filtros(marca, undefined)}
             className={cn(
               "shrink-0 rounded-full border px-4 py-2 text-xs font-extrabold tracking-wider uppercase transition-colors",
               !categoria
@@ -123,7 +128,7 @@ function CatalogoPage() {
             <Link
               key={c.value}
               to="/catalogo"
-              search={{ marca, categoria: c.value }}
+              search={filtros(marca, c.value)}
               className={cn(
                 "shrink-0 rounded-full border px-4 py-2 text-xs font-extrabold tracking-wider uppercase transition-colors",
                 categoria === c.value

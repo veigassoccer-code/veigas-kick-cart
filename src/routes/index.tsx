@@ -42,7 +42,7 @@ function useDestaques() {
     queryKey: ["produtos", "destaques"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("produtos" as never)
+        .from("produtos")
         .select("*")
         .eq("destaque", true)
         .order("preco", { ascending: false });
