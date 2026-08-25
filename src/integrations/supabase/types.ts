@@ -14,7 +14,74 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      produtos: {
+        Row: {
+          categoria: string
+          created_at: string
+          destaque: boolean
+          id: string
+          imagem_url: string
+          marca: string
+          nome: string
+          preco: number
+        }
+        Insert: {
+          categoria: string
+          created_at?: string
+          destaque?: boolean
+          id?: string
+          imagem_url: string
+          marca: string
+          nome: string
+          preco: number
+        }
+        Update: {
+          categoria?: string
+          created_at?: string
+          destaque?: boolean
+          id?: string
+          imagem_url?: string
+          marca?: string
+          nome?: string
+          preco?: number
+        }
+        Relationships: []
+      }
+      variacoes: {
+        Row: {
+          created_at: string
+          estoque: number
+          id: string
+          link_yampi: string
+          produto_id: string
+          tamanho: number
+        }
+        Insert: {
+          created_at?: string
+          estoque?: number
+          id?: string
+          link_yampi: string
+          produto_id: string
+          tamanho: number
+        }
+        Update: {
+          created_at?: string
+          estoque?: number
+          id?: string
+          link_yampi?: string
+          produto_id?: string
+          tamanho?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variacoes_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
