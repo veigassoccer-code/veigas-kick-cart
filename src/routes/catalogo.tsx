@@ -43,13 +43,14 @@ function CatalogoPage() {
   const { data: produtos, isLoading } = useQuery({
     queryKey: ["produtos", "catalogo", marca ?? null, categoria ?? null],
     queryFn: async () => {
+      // Marca e categoria são buscadas como texto parcial no nome do produto
       let query = supabase
         .from("produtos")
         .select("*")
         .order("destaque", { ascending: false })
         .order("preco", { ascending: false });
-      if (marca) query = query.eq("marca", marca);
-      if (categoria) query = query.eq("categoria", categoria);
+      if (marca) query = query.ilike("nome", `%${marca}%`);
+      if (categoria) query = query.ilike("nome", `%${categoria}%`);
       const { data, error } = await query;
       if (error) throw error;
       return data as unknown as Produto[];

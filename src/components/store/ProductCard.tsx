@@ -1,7 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { formatParcelas, formatPreco, type Produto } from "@/lib/products";
+import { formatParcelas, formatPreco, getImagens, getMarca, type Produto } from "@/lib/products";
 
 export function ProductCard({ produto }: { produto: Produto }) {
+  const marca = getMarca(produto.nome);
+  const imagem = getImagens(produto)[0] ?? produto.imagem_url;
+
   return (
     <Link
       to="/produto/$id"
@@ -10,7 +13,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
     >
       <div className="relative aspect-square overflow-hidden bg-surface">
         <img
-          src={produto.imagem_url}
+          src={imagem}
           alt={produto.nome}
           loading="lazy"
           width={1024}
@@ -24,9 +27,11 @@ export function ProductCard({ produto }: { produto: Produto }) {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
-        <span className="text-[10px] font-extrabold tracking-widest text-muted-foreground uppercase">
-          {produto.marca}
-        </span>
+        {marca && (
+          <span className="text-[10px] font-extrabold tracking-widest text-muted-foreground uppercase">
+            {marca}
+          </span>
+        )}
         <h3 className="line-clamp-2 min-h-10 text-sm leading-snug font-bold text-card-foreground">
           {produto.nome}
         </h3>
