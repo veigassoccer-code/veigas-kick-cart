@@ -1,20 +1,22 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Headphones, Mail, MapPin } from "lucide-react";
+import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 import { SocialLinks } from "@/components/store/Footer";
 
 export const Route = createFileRoute("/contato")({
   head: () => ({
     meta: [
-      { title: "Contato — Veigas Soccer" },
+      { title: "Contate-nos — Veigas Soccer" },
       {
         name: "description",
         content:
-          "Fale com a Veigas Soccer: suporte via WhatsApp +55 (91) 99904-1093 ou e-mail suporte@veigassoccer.com.br, de segunda a sexta, das 8h às 18h.",
+          "Estamos à disposição para suporte via WhatsApp e e-mail, de segunda a sexta-feira, das 08h às 18h. Fale com a Veigas Soccer.",
       },
-      { property: "og:title", content: "Contato — Veigas Soccer" },
+      { property: "og:title", content: "Contate-nos — Veigas Soccer" },
       {
         property: "og:description",
-        content: "Suporte via WhatsApp ou e-mail, de segunda a sexta, das 8h às 18h.",
+        content: "Suporte via WhatsApp e e-mail, de segunda a sexta-feira, das 08h às 18h.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -30,68 +32,153 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-const CANAIS = [
-  {
-    titulo: "WhatsApp",
-    valor: "+55 (91) 99904-1093",
-    descricao: "Resposta rápida no horário de atendimento",
-    href: "https://wa.me/5591999041093",
-    Icon: WhatsAppIcon,
-  },
-  {
-    titulo: "E-mail",
-    valor: "suporte@veigassoccer.com.br",
-    descricao: "Respondemos em até 1 dia útil",
-    href: "mailto:suporte@veigassoccer.com.br",
-    Icon: Mail,
-  },
-];
+function FormularioContato() {
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [mensagem, setMensagem] = useState("");
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (nome.trim().length < 3) {
+      toast.error("Digite seu nome completo.");
+      return;
+    }
+    if (!email.includes("@")) {
+      toast.error("Digite um e-mail válido.");
+      return;
+    }
+    if (mensagem.trim().length < 10) {
+      toast.error("Escreva uma mensagem um pouco maior.");
+      return;
+    }
+    toast.success("Mensagem enviada! Responderemos em até 1 dia útil.");
+    setNome("");
+    setEmail("");
+    setMensagem("");
+  };
+
+  const inputClass =
+    "h-12 w-full rounded-full border border-input bg-surface px-5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none";
+
+  return (
+    <form onSubmit={onSubmit} className="space-y-4">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <input
+          type="text"
+          required
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Seu nome completo"
+          maxLength={100}
+          className={inputClass}
+        />
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Seu e-mail"
+          maxLength={255}
+          className={inputClass}
+        />
+      </div>
+      <textarea
+        required
+        value={mensagem}
+        onChange={(e) => setMensagem(e.target.value)}
+        placeholder="Deixe aqui a sua mensagem"
+        rows={6}
+        maxLength={1000}
+        className="w-full resize-none rounded-3xl border border-input bg-surface px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+      />
+      <button
+        type="submit"
+        className="h-12 w-full rounded-full bg-primary text-sm font-extrabold tracking-wider text-primary-foreground uppercase transition-opacity hover:opacity-90 sm:w-auto sm:px-10"
+      >
+        Enviar mensagem
+      </button>
+    </form>
+  );
+}
 
 function ContatoPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
+      {/* Migalha de pão + título */}
       <header className="mb-10 text-center">
-        <p className="text-xs font-extrabold tracking-[0.3em] text-primary uppercase">
-          Fale com a gente
-        </p>
-        <h1 className="mt-2 font-display text-4xl tracking-wide uppercase sm:text-5xl">
-          Contato
+        <nav aria-label="Migalha de pão" className="text-xs font-bold tracking-widest uppercase">
+          <Link to="/" className="text-muted-foreground transition-colors hover:text-primary">
+            Lar
+          </Link>
+          <span className="mx-2 text-muted-foreground">·</span>
+          <span className="text-primary">Contato</span>
+        </nav>
+        <h1 className="mt-3 font-display text-4xl tracking-wide uppercase sm:text-5xl">
+          Contate-nos
         </h1>
-        <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
-          Atendimento de segunda a sexta, das 8h às 18h. Suporte via WhatsApp ou E-mail.
+        <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
+          Estamos à disposição para suporte via WhatsApp e e-mail, de segunda a sexta-feira, das
+          08h às 18h. Conte conosco para o que precisar!
         </p>
       </header>
 
-      <div className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2">
-        {CANAIS.map(({ titulo, valor, descricao, href, Icon }) => (
-          <a
-            key={titulo}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary"
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/15">
-              <Icon className="h-5 w-5 text-primary" />
-            </span>
-            <h2 className="mt-4 text-sm font-extrabold tracking-wider uppercase">{titulo}</h2>
-            <p className="mt-1 font-semibold break-all text-primary">{valor}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{descricao}</p>
-          </a>
-        ))}
+      {/* Mapa de Belém/PA */}
+      <div className="overflow-hidden rounded-xl border border-border">
+        <iframe
+          title="Mapa de Belém/PA"
+          src="https://www.google.com/maps?q=Bel%C3%A9m%2C%20Par%C3%A1%2C%20Brasil&output=embed"
+          loading="lazy"
+          className="h-72 w-full sm:h-96"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
       </div>
 
-      <div className="mx-auto mt-6 flex max-w-2xl items-center gap-4 rounded-xl border border-border bg-card p-6">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/15">
-          <Clock className="h-5 w-5 text-primary" />
-        </span>
-        <div>
-          <h2 className="text-sm font-extrabold tracking-wider uppercase">
-            Horário de atendimento
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Segunda a sexta, das 8h às 18h (horário de Brasília).
-          </p>
+      {/* Cliente de suporte */}
+      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+        <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/15">
+            <Headphones className="h-5 w-5 text-primary" />
+          </span>
+          <div className="min-w-0">
+            <h2 className="text-sm font-extrabold tracking-wider uppercase">
+              Cliente de suporte
+            </h2>
+            <a
+              href="https://wa.me/5591999041093"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center gap-2 text-sm font-semibold transition-colors hover:text-primary"
+            >
+              <WhatsAppIcon className="h-4 w-4 shrink-0 text-primary" /> +55 (91) 99904-1093
+            </a>
+            <a
+              href="mailto:suporte@veigassoccer.com.br"
+              className="mt-1.5 flex items-center gap-2 text-sm font-semibold break-all transition-colors hover:text-primary"
+            >
+              <Mail className="h-4 w-4 shrink-0 text-primary" /> suporte@veigassoccer.com.br
+            </a>
+          </div>
+        </div>
+        <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/15">
+            <MapPin className="h-5 w-5 text-primary" />
+          </span>
+          <div>
+            <h2 className="text-sm font-extrabold tracking-wider uppercase">Localização</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Belém, Pará — Brasil. Atendimento online para todo o país.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Formulário */}
+      <div className="mt-10 rounded-xl border border-border bg-card p-6 sm:p-8">
+        <h2 className="text-sm font-extrabold tracking-wider text-primary uppercase">
+          Envie sua mensagem
+        </h2>
+        <div className="mt-5">
+          <FormularioContato />
         </div>
       </div>
 

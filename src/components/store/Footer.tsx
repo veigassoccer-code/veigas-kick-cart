@@ -50,13 +50,33 @@ export function SocialLinks({ className }: { className?: string }) {
   );
 }
 
-const INFORMACOES = [
-  "Compra 100% segura via Yampi",
-  "Frete grátis para todo o Brasil",
-  "Troca fácil em até 7 dias",
-  "Produtos 100% originais",
-  "Nota fiscal em todos os pedidos",
+const INFORMACOES: { label: string; to: string; params?: Record<string, string> }[] = [
+  { label: "Busca", to: "/catalogo" },
+  { label: "Contato", to: "/contato" },
+  { label: "Aviso Legal", to: "/pagina/$slug", params: { slug: "aviso-legal" } },
+  { label: "Perguntas Frequentes", to: "/pagina/$slug", params: { slug: "perguntas-frequentes" } },
+  { label: "Política de Privacidade", to: "/pagina/$slug", params: { slug: "privacidade" } },
+  { label: "Política de Troca e Devolução", to: "/pagina/$slug", params: { slug: "troca-e-devolucao" } },
+  { label: "Políticas de Envio e Prazo de Entrega", to: "/pagina/$slug", params: { slug: "envio-e-prazo" } },
 ];
+
+function InformacoesLinks() {
+  return (
+    <ul className="space-y-2 text-sm">
+      {INFORMACOES.map((item) => (
+        <li key={item.label}>
+          <Link
+            to={item.to}
+            params={item.params ?? {}}
+            className="text-muted-foreground transition-colors hover:text-primary"
+          >
+            {item.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -122,25 +142,44 @@ function LinksRapidos() {
   );
 }
 
+const SECOES = [
+  { value: "info", titulo: "Informações", Conteudo: InformacoesLinks },
+  { value: "links", titulo: "Links Rápidos", Conteudo: LinksRapidos },
+  {
+    value: "newsletter",
+    titulo: "Assine nossa Newsletter",
+    Conteudo: function NewsletterBloco() {
+      return (
+        <>
+          <p className="text-sm text-muted-foreground">
+            Receba lançamentos e promoções exclusivas.
+          </p>
+          <NewsletterForm />
+        </>
+      );
+    },
+  },
+];
+
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto max-w-6xl px-4 py-12">
-        {/* Marca + suporte */}
+        {/* Marca + horários de suporte */}
         <div className="grid gap-10 md:grid-cols-2">
           <div>
             <p className="font-display text-3xl tracking-wide">
               VEIGAS <span className="text-primary">SOCCER</span>
             </p>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              A loja de quem vive futebol. Chuteiras originais de campo, futsal e society com o
-              melhor preço do Brasil.
+              A loja de quem vive futebol. Chuteiras de campo, futsal e society com o melhor
+              preço do Brasil.
             </p>
             <SocialLinks className="mt-5 flex gap-3" />
           </div>
           <div>
             <h3 className="text-xs font-extrabold tracking-widest text-primary uppercase">
-              Suporte
+              Horários de Suporte
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Atendimento de segunda a sexta, das 8h às 18h. Suporte via WhatsApp ou E-mail.
@@ -166,68 +205,30 @@ export function Footer() {
 
         {/* Seções sanfonadas — mobile */}
         <Accordion type="multiple" className="mt-10 md:hidden">
-          <AccordionItem value="info" className="border-border">
-            <AccordionTrigger className="text-sm font-extrabold tracking-wider uppercase">
-              Informações
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                {INFORMACOES.map((info) => (
-                  <li key={info}>{info}</li>
-                ))}
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="links" className="border-border">
-            <AccordionTrigger className="text-sm font-extrabold tracking-wider uppercase">
-              Links Rápidos
-            </AccordionTrigger>
-            <AccordionContent>
-              <LinksRapidos />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="newsletter" className="border-border">
-            <AccordionTrigger className="text-sm font-extrabold tracking-wider uppercase">
-              Assine nossa Newsletter
-            </AccordionTrigger>
-            <AccordionContent>
-              <p className="text-sm text-muted-foreground">
-                Receba lançamentos e promoções exclusivas.
-              </p>
-              <NewsletterForm />
-            </AccordionContent>
-          </AccordionItem>
+          {SECOES.map(({ value, titulo, Conteudo }) => (
+            <AccordionItem key={value} value={value} className="border-border">
+              <AccordionTrigger className="text-sm font-extrabold tracking-wider text-primary uppercase">
+                {titulo}
+              </AccordionTrigger>
+              <AccordionContent>
+                <Conteudo />
+              </AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
 
         {/* Colunas — desktop */}
         <div className="mt-12 hidden grid-cols-3 gap-10 border-t border-border pt-10 md:grid">
-          <div>
-            <h3 className="text-xs font-extrabold tracking-widest text-primary uppercase">
-              Informações
-            </h3>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              {INFORMACOES.map((info) => (
-                <li key={info}>{info}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xs font-extrabold tracking-widest text-primary uppercase">
-              Links Rápidos
-            </h3>
-            <div className="mt-4">
-              <LinksRapidos />
+          {SECOES.map(({ value, titulo, Conteudo }) => (
+            <div key={value}>
+              <h3 className="text-xs font-extrabold tracking-widest text-primary uppercase">
+                {titulo}
+              </h3>
+              <div className="mt-4">
+                <Conteudo />
+              </div>
             </div>
-          </div>
-          <div>
-            <h3 className="text-xs font-extrabold tracking-widest text-primary uppercase">
-              Assine nossa Newsletter
-            </h3>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Receba lançamentos e promoções exclusivas.
-            </p>
-            <NewsletterForm />
-          </div>
+          ))}
         </div>
       </div>
 
