@@ -280,7 +280,9 @@ function ProdutoPage() {
             {podeComprar ? "Comprar agora" : "Selecione um tamanho"}
           </button>
           <p className="mt-3 text-center text-xs text-muted-foreground">
-            Você será redirecionado para o checkout seguro.
+            {podeComprar && !selecionada?.link_yampi?.trim()
+              ? "Você será atendido pelo WhatsApp para finalizar a compra."
+              : "Você será redirecionado para o checkout seguro."}
           </p>
 
           <ul className="mt-8 space-y-3 border-t border-border pt-6 text-sm">
