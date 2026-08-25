@@ -1,13 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { ArrowLeft, BadgeCheck, ShieldCheck, Truck } from "lucide-react";
+import { ArrowLeft, BadgeCheck, ChevronLeft, ChevronRight, ShieldCheck, Truck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   CATEGORIAS,
   TAMANHOS_PADRAO,
   formatParcelas,
   formatPreco,
+  getCategoria,
+  getImagens,
+  getMarca,
   type Produto,
   type Variacao,
 } from "@/lib/products";
