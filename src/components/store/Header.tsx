@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { MARCAS, CATEGORIAS } from "@/lib/products";
-import logoAsset from "@/assets/veigas-soccer-logo.jpg.asset.json";
+import logoAsset from "@/assets/veigas-lobo-logo.png.asset.json";
 
 const TOPBAR_TEXT =
   "ENCONTRE AQUI CHUTEIRAS A PARTIR DE R$ 419,90 | FRETE GRÁTIS PARA TODO O BRASIL";
