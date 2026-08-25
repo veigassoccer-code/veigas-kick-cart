@@ -66,13 +66,22 @@ function ProdutoPage() {
   });
 
   const mapaVariacoes = new Map((variacoes ?? []).map((v) => [v.tamanho, v]));
+  // Produto sem nenhuma variação cadastrada: todos os tamanhos 36–43 disponíveis por padrão
+  const semVariacoes = !carregandoVariacoes && (variacoes ?? []).length === 0;
   const selecionada = tamanhoSel != null ? mapaVariacoes.get(tamanhoSel) : undefined;
-  const podeComprar = selecionada != null && selecionada.estoque > 0;
+  const podeComprar =
+    tamanhoSel != null && (semVariacoes || (selecionada != null && selecionada.estoque > 0));
 
   const comprar = () => {
-    if (podeComprar && selecionada) {
-      window.open(selecionada.link_yampi, "_blank", "noopener,noreferrer");
-    }
+    if (!podeComprar || !produto) return;
+    const link = selecionada?.link_yampi?.trim();
+    const destino =
+      link && link.length > 0
+        ? link
+        : `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(
+            `Olá! Quero comprar a ${produto.nome} (tamanho ${tamanhoSel}).`,
+          )}`;
+    window.open(destino, "_blank", "noopener,noreferrer");
   };
 
   if (carregandoProduto) {
