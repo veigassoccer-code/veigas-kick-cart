@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { MARCAS, CATEGORIAS } from "@/lib/products";
-import logoLobo from "@/assets/logo-lobo.png";
+import logoAsset from "@/assets/veigas-soccer-logo.jpg.asset.json";
 
 const TOPBAR_TEXT =
   "ENCONTRE AQUI CHUTEIRAS A PARTIR DE R$ 419,90 | FRETE GRÁTIS PARA TODO O BRASIL";
@@ -171,7 +171,7 @@ export function Header() {
             className="flex items-center justify-center gap-2 justify-self-center"
             aria-label="Veigas Soccer — Início"
           >
-            <img src={logoLobo} alt="" width={512} height={512} className="h-9 w-9 object-contain" />
+            <img src={logoAsset.url} alt="" width={512} height={512} className="h-9 w-9 object-contain" />
             <span className="font-display text-xl tracking-wide text-foreground sm:text-2xl">
               VEIGAS <span className="text-primary">SOCCER</span>
             </span>
