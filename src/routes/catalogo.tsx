@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { PackageSearch } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { CATEGORIAS, MARCAS, type Produto } from "@/lib/products";
@@ -40,22 +41,28 @@ export const Route = createFileRoute("/catalogo")({
 function CatalogoPage() {
   const { marca, categoria } = Route.useSearch();
 
-  const { data: produtos, isLoading } = useQuery({
-    queryKey: ["produtos", "catalogo", marca ?? null, categoria ?? null],
+  const { data: produtos, isLoading, isError } = useQuery({
+    queryKey: ["produtos", "catalogo"],
     queryFn: async () => {
-      // Marca e categoria são buscadas como texto parcial no nome do produto
-      let query = supabase
-        .from("produtos")
-        .select("*")
-        .order("destaque", { ascending: false })
-        .order("preco", { ascending: false });
-      if (marca) query = query.ilike("nome", `%${marca}%`);
-      if (categoria) query = query.ilike("nome", `%${categoria}%`);
-      const { data, error } = await query;
+      const { data, error } = await supabase.from("produtos").select("*");
       if (error) throw error;
       return data as unknown as Produto[];
     },
   });
+
+  const produtosFiltrados = useMemo(() => {
+    const termoMarca = marca?.toLowerCase().trim();
+    const termoCategoria = categoria?.toLowerCase().trim();
+
+    return (produtos ?? []).filter((produto) => {
+      const nome = produto.nome.toLowerCase();
+      const combinaMarca = !termoMarca || termoMarca === "todas" || nome.includes(termoMarca);
+      const combinaCategoria =
+        !termoCategoria || termoCategoria === "todas" || nome.includes(termoCategoria);
+
+      return combinaMarca && combinaCategoria;
+    });
+  }, [produtos, marca, categoria]);
 
   const filtros = (m?: string, c?: string) => ({
     ...(m ? { marca: m } : {}),
@@ -152,13 +159,21 @@ function CatalogoPage() {
             <div key={i} className="aspect-[3/4] animate-pulse rounded-xl bg-surface" />
           ))}
         </div>
-      ) : produtos && produtos.length > 0 ? (
+      ) : isError ? (
+        <div className="flex flex-col items-center gap-4 rounded-xl border border-border bg-card py-16 text-center">
+          <PackageSearch className="h-10 w-10 text-muted-foreground" />
+          <p className="max-w-sm text-sm text-muted-foreground">
+            Não foi possível carregar o catálogo agora. Tente atualizar a página.
+          </p>
+        </div>
+      ) : produtosFiltrados.length > 0 ? (
         <>
           <p className="mb-4 text-xs text-muted-foreground">
-            {produtos.length} {produtos.length === 1 ? "produto encontrado" : "produtos encontrados"}
+            {produtosFiltrados.length}{" "}
+            {produtosFiltrados.length === 1 ? "produto encontrado" : "produtos encontrados"}
           </p>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {produtos.map((produto) => (
+            {produtosFiltrados.map((produto) => (
               <ProductCard key={produto.id} produto={produto} />
             ))}
           </div>
