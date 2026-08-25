@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   CATEGORIAS,
   TAMANHOS_PADRAO,
+  WHATSAPP_LOJA,
   formatParcelas,
   formatPreco,
   getCategoria,
@@ -66,13 +67,22 @@ function ProdutoPage() {
   });
 
   const mapaVariacoes = new Map((variacoes ?? []).map((v) => [v.tamanho, v]));
+  // Produto sem nenhuma variação cadastrada: todos os tamanhos 36–43 disponíveis por padrão
+  const semVariacoes = !carregandoVariacoes && (variacoes ?? []).length === 0;
   const selecionada = tamanhoSel != null ? mapaVariacoes.get(tamanhoSel) : undefined;
-  const podeComprar = selecionada != null && selecionada.estoque > 0;
+  const podeComprar =
+    tamanhoSel != null && (semVariacoes || (selecionada != null && selecionada.estoque > 0));
 
   const comprar = () => {
-    if (podeComprar && selecionada) {
-      window.open(selecionada.link_yampi, "_blank", "noopener,noreferrer");
-    }
+    if (!podeComprar || !produto) return;
+    const link = selecionada?.link_yampi?.trim();
+    const destino =
+      link && link.length > 0
+        ? link
+        : `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(
+            `Olá! Quero comprar a ${produto.nome} (tamanho ${tamanhoSel}).`,
+          )}`;
+    window.open(destino, "_blank", "noopener,noreferrer");
   };
 
   if (carregandoProduto) {
@@ -226,7 +236,7 @@ function ProdutoPage() {
             <div className="mt-3 grid grid-cols-5 gap-2">
               {TAMANHOS_PADRAO.map((tamanho) => {
                 const variacao = mapaVariacoes.get(tamanho);
-                const semEstoque = !variacao || variacao.estoque <= 0;
+                const semEstoque = !semVariacoes && (!variacao || variacao.estoque <= 0);
                 const ativo = tamanhoSel === tamanho;
                 return (
                   <button
@@ -270,7 +280,9 @@ function ProdutoPage() {
             {podeComprar ? "Comprar agora" : "Selecione um tamanho"}
           </button>
           <p className="mt-3 text-center text-xs text-muted-foreground">
-            Você será redirecionado para o checkout seguro.
+            {podeComprar && !selecionada?.link_yampi?.trim()
+              ? "Você será atendido pelo WhatsApp para finalizar a compra."
+              : "Você será redirecionado para o checkout seguro."}
           </p>
 
           <ul className="mt-8 space-y-3 border-t border-border pt-6 text-sm">

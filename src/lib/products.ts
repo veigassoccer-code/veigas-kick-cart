@@ -25,7 +25,9 @@ export const CATEGORIAS: { value: Categoria; label: string; tagline: string }[] 
   { value: "society", label: "Society", tagline: "Domine o Fut7" },
 ];
 
-export const TAMANHOS_PADRAO = [38, 39, 40, 41, 42];
+export const TAMANHOS_PADRAO = [36, 37, 38, 39, 40, 41, 42, 43];
+
+export const WHATSAPP_LOJA = "5591999041093";
 
 /** Marca e categoria são derivadas do nome do produto (busca por texto). */
 export function getMarca(nome: string): string | null {
