@@ -101,6 +101,7 @@
 .dark {
   --background: oklch(0 0 0);
   --foreground: oklch(1 0 0);
+  color: var(--foreground);
   --card: oklch(0.11 0 0);
   --card-foreground: oklch(1 0 0);
   --popover: oklch(0.11 0 0);

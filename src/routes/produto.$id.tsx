@@ -131,14 +131,14 @@ function ProdutoPage() {
       <div className="grid gap-8 md:grid-cols-2">
         {/* Galeria de fotos */}
         <div>
-          <div className="relative overflow-hidden rounded-xl border border-border bg-surface">
+          <div className="relative overflow-hidden rounded-xl border border-border bg-white">
             <img
               key={fotos[fotoAtual]}
               src={fotos[fotoAtual]}
               alt={`${produto.nome} — foto ${fotoAtual + 1} de ${fotos.length}`}
               width={1024}
               height={1024}
-              className="aspect-square h-full w-full object-cover"
+              className="aspect-square h-full w-full object-contain p-4"
             />
             {fotos.length > 1 && (
               <>
@@ -174,7 +174,7 @@ function ProdutoPage() {
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === fotoAtual}
                   className={cn(
-                    "h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-colors",
+                    "h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 bg-white transition-colors",
                     i === fotoAtual ? "border-primary" : "border-border hover:border-primary/60",
                   )}
                 >
@@ -184,7 +184,7 @@ function ProdutoPage() {
                     loading="lazy"
                     width={160}
                     height={160}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-contain p-1"
                   />
                 </button>
               ))}
