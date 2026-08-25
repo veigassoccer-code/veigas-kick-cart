@@ -67,11 +67,9 @@ function ProdutoPage() {
   });
 
   const mapaVariacoes = new Map((variacoes ?? []).map((v) => [v.tamanho, v]));
-  // Produto sem nenhuma variação cadastrada: todos os tamanhos 36–43 disponíveis por padrão
-  const semVariacoes = !carregandoVariacoes && (variacoes ?? []).length === 0;
   const selecionada = tamanhoSel != null ? mapaVariacoes.get(tamanhoSel) : undefined;
-  const podeComprar =
-    tamanhoSel != null && (semVariacoes || (selecionada != null && selecionada.estoque > 0));
+  // Dropshipping: estoque ilimitado — qualquer tamanho da grade libera a compra
+  const podeComprar = tamanhoSel != null;
 
   const comprar = () => {
     if (!podeComprar || !produto) return;
