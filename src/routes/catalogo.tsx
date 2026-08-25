@@ -13,8 +13,10 @@ type CatalogoSearch = {
 
 export const Route = createFileRoute("/catalogo")({
   validateSearch: (search: Record<string, unknown>): CatalogoSearch => ({
-    marca: typeof search.marca === "string" ? search.marca : undefined,
-    categoria: typeof search.categoria === "string" ? search.categoria : undefined,
+    ...(typeof search["marca"] === "string" ? { marca: search["marca"] as string } : {}),
+    ...(typeof search["categoria"] === "string"
+      ? { categoria: search["categoria"] as string }
+      : {}),
   }),
   head: () => ({
     meta: [
