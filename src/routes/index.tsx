@@ -41,11 +41,7 @@ function useDestaques() {
   return useQuery({
     queryKey: ["produtos", "destaques"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("produtos")
-        .select("*")
-        .eq("destaque", true)
-        .order("preco", { ascending: false });
+      const { data, error } = await supabase.from("produtos").select("*").limit(12);
       if (error) throw error;
       return data as unknown as Produto[];
     },

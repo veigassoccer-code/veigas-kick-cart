@@ -11,10 +11,36 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { MARCAS, CATEGORIAS } from "@/lib/products";
-import logoAsset from "@/assets/veigas-lobo-logo.png.asset.json";
 
 const TOPBAR_TEXT =
   "ENCONTRE AQUI CHUTEIRAS A PARTIR DE R$ 419,90 | FRETE GRÁTIS PARA TODO O BRASIL";
+
+function WolfLogoIcon() {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+      focusable="false"
+      className="h-8 w-8 shrink-0 sm:h-9 sm:w-9"
+    >
+      <path
+        d="M9 17 24 7l8 9 8-9 15 10-5 29-18 11-18-11L9 17Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeLinejoin="round"
+      />
+      <path
+        d="m18 23 10 6-5 5m23-11-10 6 5 5M24 43l8 5 8-5M26 35h12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 function DrawerLink({
   to,
@@ -168,10 +194,10 @@ export function Header() {
           {/* Logo centralizada */}
           <Link
             to="/"
-            className="flex items-center justify-center gap-2 justify-self-center"
+            className="flex min-w-0 items-center justify-center gap-2 text-primary justify-self-center"
             aria-label="Veigas Soccer — Início"
           >
-            <img src={logoAsset.url} alt="" width={512} height={512} className="h-8 w-auto object-contain sm:h-9" />
+            <WolfLogoIcon />
             <span className="font-display text-xl tracking-wide text-foreground sm:text-2xl">
               VEIGAS <span className="text-primary">SOCCER</span>
             </span>
