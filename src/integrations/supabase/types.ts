@@ -16,32 +16,29 @@ export type Database = {
     Tables: {
       produtos: {
         Row: {
-          categoria: string
           created_at: string
           destaque: boolean
           id: string
           imagem_url: string
-          marca: string
+          imagens: Json
           nome: string
           preco: number
         }
         Insert: {
-          categoria: string
           created_at?: string
           destaque?: boolean
           id?: string
           imagem_url: string
-          marca: string
+          imagens?: Json
           nome: string
           preco: number
         }
         Update: {
-          categoria?: string
           created_at?: string
           destaque?: boolean
           id?: string
           imagem_url?: string
-          marca?: string
+          imagens?: Json
           nome?: string
           preco?: number
         }
