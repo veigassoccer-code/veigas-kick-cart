@@ -163,7 +163,7 @@ const SECOES = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="dark border-t border-border bg-black">
       <div className="mx-auto max-w-6xl px-4 py-12">
         {/* Marca + horários de suporte */}
         <div className="grid gap-10 md:grid-cols-2">
