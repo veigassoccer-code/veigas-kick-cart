@@ -171,7 +171,7 @@ export function Header() {
             className="flex items-center justify-center gap-2 justify-self-center"
             aria-label="Veigas Soccer — Início"
           >
-            <img src={logoAsset.url} alt="" width={512} height={512} className="h-9 w-9 object-contain" />
+            <img src={logoAsset.url} alt="" width={512} height={512} className="h-8 w-auto object-contain sm:h-9" />
             <span className="font-display text-xl tracking-wide text-foreground sm:text-2xl">
               VEIGAS <span className="text-primary">SOCCER</span>
             </span>
