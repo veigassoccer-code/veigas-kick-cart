@@ -19,12 +19,12 @@ const FAQS = [
   {
     pergunta: "Em quanto tempo minha chuteira chega?",
     resposta:
-      "O prazo médio é de 3 a 10 dias úteis, dependendo da sua região. E o melhor: o frete é grátis para todo o Brasil.",
+      "O prazo de entrega é de 20 a 30 dias úteis após a confirmação do pagamento, dependendo da sua região. E o melhor: o frete é grátis para todo o Brasil.",
   },
   {
-    pergunta: "As chuteiras são originais?",
+    pergunta: "Qual a qualidade das chuteiras?",
     resposta:
-      "100% originais. Trabalhamos apenas com fornecedores oficiais das marcas e todos os pedidos acompanham nota fiscal e garantia.",
+      "Trabalhamos apenas com chuteiras padrão premium, com acabamento de alto nível, materiais resistentes e conforto profissional. Todos os pedidos acompanham garantia.",
   },
   {
     pergunta: "Como acompanho o meu pedido?",
