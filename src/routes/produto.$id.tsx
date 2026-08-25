@@ -38,6 +38,7 @@ export const Route = createFileRoute("/produto/$id")({
 function ProdutoPage() {
   const { id } = Route.useParams();
   const [tamanhoSel, setTamanhoSel] = useState<number | null>(null);
+  const [fotoSel, setFotoSel] = useState(0);
 
   const { data: produto, isLoading: carregandoProduto } = useQuery({
     queryKey: ["produto", id],
@@ -104,7 +105,11 @@ function ProdutoPage() {
     );
   }
 
-  const categoriaLabel = CATEGORIAS.find((c) => c.value === produto.categoria)?.label;
+  const fotos = getImagens(produto);
+  const fotoAtual = Math.min(fotoSel, fotos.length - 1);
+  const marca = getMarca(produto.nome);
+  const categoria = getCategoria(produto.nome);
+  const categoriaLabel = CATEGORIAS.find((c) => c.value === categoria)?.label;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
@@ -116,21 +121,76 @@ function ProdutoPage() {
       </Link>
 
       <div className="grid gap-8 md:grid-cols-2">
-        <div className="overflow-hidden rounded-xl border border-border bg-surface">
-          <img
-            src={produto.imagem_url}
-            alt={produto.nome}
-            width={1024}
-            height={1024}
-            className="aspect-square h-full w-full object-cover"
-          />
+        {/* Galeria de fotos */}
+        <div>
+          <div className="relative overflow-hidden rounded-xl border border-border bg-surface">
+            <img
+              key={fotos[fotoAtual]}
+              src={fotos[fotoAtual]}
+              alt={`${produto.nome} — foto ${fotoAtual + 1} de ${fotos.length}`}
+              width={1024}
+              height={1024}
+              className="aspect-square h-full w-full object-cover"
+            />
+            {fotos.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setFotoSel((fotoAtual - 1 + fotos.length) % fotos.length)}
+                  aria-label="Foto anterior"
+                  className="absolute top-1/2 left-2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/70 text-foreground backdrop-blur transition-colors hover:bg-primary hover:text-primary-foreground"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFotoSel((fotoAtual + 1) % fotos.length)}
+                  aria-label="Próxima foto"
+                  className="absolute top-1/2 right-2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/70 text-foreground backdrop-blur transition-colors hover:bg-primary hover:text-primary-foreground"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+                <span className="absolute right-3 bottom-3 rounded bg-background/70 px-2 py-0.5 text-[10px] font-bold text-foreground backdrop-blur">
+                  {fotoAtual + 1}/{fotos.length}
+                </span>
+              </>
+            )}
+          </div>
+          {fotos.length > 1 && (
+            <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1">
+              {fotos.map((foto, i) => (
+                <button
+                  key={foto + i}
+                  type="button"
+                  onClick={() => setFotoSel(i)}
+                  aria-label={`Ver foto ${i + 1}`}
+                  aria-current={i === fotoAtual}
+                  className={cn(
+                    "h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-colors",
+                    i === fotoAtual ? "border-primary" : "border-border hover:border-primary/60",
+                  )}
+                >
+                  <img
+                    src={foto}
+                    alt=""
+                    loading="lazy"
+                    width={160}
+                    height={160}
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded bg-primary/15 px-2.5 py-1 text-[10px] font-extrabold tracking-widest text-primary uppercase">
-              {produto.marca}
-            </span>
+            {marca && (
+              <span className="rounded bg-primary/15 px-2.5 py-1 text-[10px] font-extrabold tracking-widest text-primary uppercase">
+                {marca}
+              </span>
+            )}
             {categoriaLabel && (
               <span className="rounded bg-secondary px-2.5 py-1 text-[10px] font-extrabold tracking-widest text-secondary-foreground uppercase">
                 {categoriaLabel}
