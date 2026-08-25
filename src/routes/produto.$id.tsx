@@ -54,7 +54,7 @@ function ProdutoPage() {
     },
   });
 
-  const { data: variacoes, isLoading: carregandoVariacoes } = useQuery({
+  const { data: variacoes } = useQuery({
     queryKey: ["variacoes", id],
     queryFn: async () => {
       const { data, error } = await supabase
