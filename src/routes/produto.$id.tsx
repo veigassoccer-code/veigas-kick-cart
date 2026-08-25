@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   CATEGORIAS,
   TAMANHOS_PADRAO,
+  WHATSAPP_LOJA,
   formatParcelas,
   formatPreco,
   getCategoria,
@@ -235,7 +236,7 @@ function ProdutoPage() {
             <div className="mt-3 grid grid-cols-5 gap-2">
               {TAMANHOS_PADRAO.map((tamanho) => {
                 const variacao = mapaVariacoes.get(tamanho);
-                const semEstoque = !variacao || variacao.estoque <= 0;
+                const semEstoque = !semVariacoes && (!variacao || variacao.estoque <= 0);
                 const ativo = tamanhoSel === tamanho;
                 return (
                   <button
