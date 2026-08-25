@@ -54,7 +54,7 @@ function useDestaques() {
 
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="dark relative overflow-hidden bg-black">
       <img
         src={heroBoot}
         alt="Chuteira profissional Veigas Soccer em destaque"
@@ -116,7 +116,7 @@ function CategoriesSection() {
             key={cat.value}
             to="/catalogo"
             search={{ categoria: cat.value }}
-            className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-border sm:aspect-[4/5]"
+            className="group dark relative aspect-[3/4] overflow-hidden rounded-xl border border-border bg-black sm:aspect-[4/5]"
           >
             <img
               src={CATEGORIA_IMAGENS[cat.value]}

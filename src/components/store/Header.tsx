@@ -90,7 +90,7 @@ function MarcaItem({ marca }: { marca: string }) {
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50">
+    <header className="dark sticky top-0 z-50">
       {/* Faixa de aviso promocional */}
       <div className="overflow-hidden bg-primary py-1.5">
         <div className="flex w-max animate-marquee gap-10 whitespace-nowrap">
@@ -118,7 +118,7 @@ export function Header() {
             </SheetTrigger>
 <SheetContent
               side="left"
-              className="w-[85vw] max-w-sm border-border bg-background p-0 [&>button]:hidden"
+              className="dark w-[85vw] max-w-sm border-border bg-background p-0 [&>button]:hidden"
             >
               <SheetHeader className="sr-only">
                 <SheetTitle>Menu</SheetTitle>
