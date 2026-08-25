@@ -31,7 +31,7 @@ function DrawerLink({
     <SheetClose asChild>
       <Link
         to={to}
-        search={search}
+        search={search ?? {}}
         className={`block px-5 py-3.5 text-sm font-extrabold tracking-wider text-primary uppercase transition-colors hover:bg-accent ${className}`}
       >
         {children}

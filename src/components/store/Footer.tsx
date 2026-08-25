@@ -67,7 +67,7 @@ function InformacoesLinks() {
         <li key={item.label}>
           <Link
             to={item.to}
-            params={item.params}
+            params={item.params ?? {}}
             className="text-muted-foreground transition-colors hover:text-primary"
           >
             {item.label}
