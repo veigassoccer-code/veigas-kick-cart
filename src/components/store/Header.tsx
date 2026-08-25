@@ -106,7 +106,7 @@ export function Header() {
       </div>
 
       {/* Cabeçalho principal */}
-      <div className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <div className="border-b border-border bg-black">
         <div className="mx-auto grid h-16 max-w-6xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-4">
           {/* Menu hambúrguer */}
           <Sheet>
