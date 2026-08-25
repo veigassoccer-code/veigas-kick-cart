@@ -116,7 +116,10 @@ export function Header() {
             >
               <Menu className="h-6 w-6" />
             </SheetTrigger>
-            <SheetContent side="left" className="w-[85vw] max-w-sm border-border bg-background p-0">
+<SheetContent
+              side="left"
+              className="w-[85vw] max-w-sm border-border bg-background p-0 [&>button]:hidden"
+            >
               <SheetHeader className="sr-only">
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
