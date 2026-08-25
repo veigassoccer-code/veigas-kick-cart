@@ -103,91 +103,93 @@ function FormularioContato() {
 
 function ContatoPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      {/* Migalha de pão + título */}
-      <header className="mb-10 text-center">
-        <nav aria-label="Migalha de pão" className="text-xs font-bold tracking-widest uppercase">
-          <Link to="/" className="text-muted-foreground transition-colors hover:text-primary">
-            Lar
-          </Link>
-          <span className="mx-2 text-muted-foreground">·</span>
-          <span className="text-primary">Contato</span>
-        </nav>
-        <h1 className="mt-3 font-display text-4xl tracking-wide uppercase sm:text-5xl">
-          Contate-nos
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Estamos à disposição para suporte via WhatsApp e e-mail, de segunda a sexta-feira, das
-          08h às 18h. Conte conosco para o que precisar!
-        </p>
-      </header>
+    <section className="page-content-light flex-1">
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        {/* Migalha de pão + título */}
+        <header className="mb-10 text-center">
+          <nav aria-label="Migalha de pão" className="text-xs font-bold tracking-widest uppercase">
+            <Link to="/" className="text-muted-foreground transition-colors hover:text-primary">
+              Lar
+            </Link>
+            <span className="mx-2 text-muted-foreground">·</span>
+            <span className="text-primary">Contato</span>
+          </nav>
+          <h1 className="mt-3 font-display text-4xl tracking-wide uppercase sm:text-5xl">
+            Contate-nos
+          </h1>
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            Estamos à disposição para suporte via WhatsApp e e-mail, de segunda a sexta-feira, das
+            08h às 18h. Conte conosco para o que precisar!
+          </p>
+        </header>
 
-      {/* Mapa de Belém/PA */}
-      <div className="overflow-hidden rounded-xl border border-border">
-        <iframe
-          title="Mapa de Belém/PA"
-          src="https://www.google.com/maps?q=Bel%C3%A9m%2C%20Par%C3%A1%2C%20Brasil&output=embed"
-          loading="lazy"
-          className="h-72 w-full sm:h-96"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      </div>
+        {/* Mapa de Belém/PA */}
+        <div className="overflow-hidden rounded-xl border border-border">
+          <iframe
+            title="Mapa de Belém/PA"
+            src="https://www.google.com/maps?q=Bel%C3%A9m%2C%20Par%C3%A1%2C%20Brasil&output=embed"
+            loading="lazy"
+            className="h-72 w-full sm:h-96"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
 
-      {/* Cliente de suporte */}
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/15">
-            <Headphones className="h-5 w-5 text-primary" />
-          </span>
-          <div className="min-w-0">
-            <h2 className="text-sm font-extrabold tracking-wider uppercase">
-              Cliente de suporte
-            </h2>
-            <a
-              href="https://wa.me/5591999041093"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 flex items-center gap-2 text-sm font-semibold transition-colors hover:text-primary"
-            >
-              <WhatsAppIcon className="h-4 w-4 shrink-0 text-primary" /> +55 (91) 99904-1093
-            </a>
-            <a
-              href="mailto:suporte@veigassoccer.com.br"
-              className="mt-1.5 flex items-center gap-2 text-sm font-semibold break-all transition-colors hover:text-primary"
-            >
-              <Mail className="h-4 w-4 shrink-0 text-primary" /> suporte@veigassoccer.com.br
-            </a>
+        {/* Cliente de suporte */}
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/15">
+              <Headphones className="h-5 w-5 text-primary" />
+            </span>
+            <div className="min-w-0">
+              <h2 className="text-sm font-extrabold tracking-wider uppercase">
+                Cliente de suporte
+              </h2>
+              <a
+                href="https://wa.me/5591999041093"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex items-center gap-2 text-sm font-semibold transition-colors hover:text-primary"
+              >
+                <WhatsAppIcon className="h-4 w-4 shrink-0 text-primary" /> +55 (91) 99904-1093
+              </a>
+              <a
+                href="mailto:suporte@veigassoccer.com.br"
+                className="mt-1.5 flex items-center gap-2 text-sm font-semibold break-all transition-colors hover:text-primary"
+              >
+                <Mail className="h-4 w-4 shrink-0 text-primary" /> suporte@veigassoccer.com.br
+              </a>
+            </div>
+          </div>
+          <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/15">
+              <MapPin className="h-5 w-5 text-primary" />
+            </span>
+            <div>
+              <h2 className="text-sm font-extrabold tracking-wider uppercase">Localização</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Belém, Pará — Brasil. Atendimento online para todo o país.
+              </p>
+            </div>
           </div>
         </div>
-        <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/15">
-            <MapPin className="h-5 w-5 text-primary" />
-          </span>
-          <div>
-            <h2 className="text-sm font-extrabold tracking-wider uppercase">Localização</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Belém, Pará — Brasil. Atendimento online para todo o país.
-            </p>
+
+        {/* Formulário */}
+        <div className="mt-10 rounded-xl border border-border bg-card p-6 sm:p-8">
+          <h2 className="text-sm font-extrabold tracking-wider text-primary uppercase">
+            Envie sua mensagem
+          </h2>
+          <div className="mt-5">
+            <FormularioContato />
           </div>
         </div>
-      </div>
 
-      {/* Formulário */}
-      <div className="mt-10 rounded-xl border border-border bg-card p-6 sm:p-8">
-        <h2 className="text-sm font-extrabold tracking-wider text-primary uppercase">
-          Envie sua mensagem
-        </h2>
-        <div className="mt-5">
-          <FormularioContato />
+        <div className="mt-10 text-center">
+          <p className="text-xs font-extrabold tracking-widest text-muted-foreground uppercase">
+            Siga a Veigas Soccer
+          </p>
+          <SocialLinks className="mt-4 flex justify-center gap-3" />
         </div>
       </div>
-
-      <div className="mt-10 text-center">
-        <p className="text-xs font-extrabold tracking-widest text-muted-foreground uppercase">
-          Siga a Veigas Soccer
-        </p>
-        <SocialLinks className="mt-4 flex justify-center gap-3" />
-      </div>
-    </div>
+    </section>
   );
 }

@@ -84,32 +84,34 @@ function PaginaInstitucionalPage() {
   if (!pagina) return null;
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
-      <header className="mb-10 text-center">
-        <nav aria-label="Migalha de pão" className="text-xs font-bold tracking-widest uppercase">
-          <Link to="/" className="text-muted-foreground transition-colors hover:text-primary">
-            Lar
-          </Link>
-          <span className="mx-2 text-muted-foreground">·</span>
-          <span className="text-primary">{pagina.titulo}</span>
-        </nav>
-        <h1 className="mt-3 font-display text-4xl tracking-wide uppercase sm:text-5xl">
-          {pagina.titulo}
-        </h1>
-        <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">{pagina.descricao}</p>
-      </header>
+    <section className="page-content-light flex-1">
+      <div className="mx-auto max-w-3xl px-4 py-10">
+        <header className="mb-10 text-center">
+          <nav aria-label="Migalha de pão" className="text-xs font-bold tracking-widest uppercase">
+            <Link to="/" className="text-muted-foreground transition-colors hover:text-primary">
+              Lar
+            </Link>
+            <span className="mx-2 text-muted-foreground">·</span>
+            <span className="text-primary">{pagina.titulo}</span>
+          </nav>
+          <h1 className="mt-3 font-display text-4xl tracking-wide uppercase sm:text-5xl">
+            {pagina.titulo}
+          </h1>
+          <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">{pagina.descricao}</p>
+        </header>
 
-      {pagina.faq ? (
-        <FAQ />
-      ) : (
-        <div className="space-y-5">
-          {pagina.paragrafos?.map((p) => (
-            <p key={p.slice(0, 24)} className="text-sm leading-relaxed text-muted-foreground">
-              {p}
-            </p>
-          ))}
-        </div>
-      )}
-    </div>
+        {pagina.faq ? (
+          <FAQ />
+        ) : (
+          <div className="space-y-5">
+            {pagina.paragrafos?.map((p) => (
+              <p key={p.slice(0, 24)} className="text-sm leading-relaxed text-muted-foreground">
+                {p}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
