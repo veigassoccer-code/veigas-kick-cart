@@ -3,10 +3,9 @@ export type Categoria = "campo" | "futsal" | "society";
 export interface Produto {
   id: string;
   nome: string;
-  marca: string;
-  categoria: Categoria;
   preco: number;
   imagem_url: string;
+  imagens: string[];
   destaque: boolean;
 }
 
@@ -27,6 +26,26 @@ export const CATEGORIAS: { value: Categoria; label: string; tagline: string }[] 
 ];
 
 export const TAMANHOS_PADRAO = [38, 39, 40, 41, 42];
+
+/** Marca e categoria são derivadas do nome do produto (busca por texto). */
+export function getMarca(nome: string): string | null {
+  const n = nome.toLowerCase();
+  return MARCAS.find((m) => n.includes(m.toLowerCase())) ?? null;
+}
+
+export function getCategoria(nome: string): Categoria | null {
+  const n = nome.toLowerCase();
+  return CATEGORIAS.find((c) => n.includes(c.value))?.value ?? null;
+}
+
+/** Normaliza a galeria: garante ao menos a imagem principal. */
+export function getImagens(produto: { imagem_url: string; imagens?: unknown }): string[] {
+  const lista = Array.isArray(produto.imagens)
+    ? produto.imagens.filter((u): u is string => typeof u === "string" && u.length > 0)
+    : [];
+  if (lista.length > 0) return lista;
+  return produto.imagem_url ? [produto.imagem_url] : [];
+}
 
 export function formatPreco(valor: number): string {
   return Number(valor).toLocaleString("pt-BR", {
