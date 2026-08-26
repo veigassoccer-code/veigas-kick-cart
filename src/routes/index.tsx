@@ -173,7 +173,9 @@ function DestaquesSection() {
         ) : (
           <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-4">
             {(produtos ?? []).map((produto) => (
-              <ProductCard key={produto.id} produto={produto} />
+              <div key={produto.id} className="w-60 shrink-0 snap-start sm:w-auto sm:shrink">
+                <ProductCard produto={produto} />
+              </div>
             ))}
           </div>
         )}

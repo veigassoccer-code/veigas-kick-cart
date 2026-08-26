@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Headphones, Mail, MapPin } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
-import { SocialLinks } from "@/components/store/Footer";
+
 
 export const Route = createFileRoute("/contato")({
   head: () => ({
@@ -181,13 +181,6 @@ function ContatoPage() {
           <div className="mt-5">
             <FormularioContato />
           </div>
-        </div>
-
-        <div className="mt-10 text-center">
-          <p className="text-xs font-extrabold tracking-widest text-muted-foreground uppercase">
-            Siga a Veigas Soccer
-          </p>
-          <SocialLinks className="mt-4 flex justify-center gap-3" />
         </div>
       </div>
     </section>

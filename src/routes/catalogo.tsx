@@ -154,7 +154,7 @@ function CatalogoPage() {
 
       {/* Grade de produtos */}
       {isLoading ? (
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="aspect-[3/4] animate-pulse rounded-xl bg-surface" />
           ))}
@@ -172,7 +172,7 @@ function CatalogoPage() {
             {produtosFiltrados.length}{" "}
             {produtosFiltrados.length === 1 ? "produto encontrado" : "produtos encontrados"}
           </p>
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {produtosFiltrados.map((produto) => (
               <ProductCard key={produto.id} produto={produto} />
             ))}

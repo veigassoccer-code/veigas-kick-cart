@@ -130,8 +130,8 @@ function ProdutoPage() {
 
       <div className="grid gap-8 md:grid-cols-2">
         {/* Galeria de fotos */}
-        <div>
-          <div className="relative overflow-hidden rounded-xl border border-border bg-white">
+        <div className="min-w-0">
+          <div className="relative w-full max-w-full overflow-hidden rounded-xl border border-border bg-white">
             <img
               key={fotos[fotoAtual]}
               src={fotos[fotoAtual]}
@@ -165,34 +165,36 @@ function ProdutoPage() {
             )}
           </div>
           {fotos.length > 1 && (
-            <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1">
-              {fotos.map((foto, i) => (
-                <button
-                  key={foto + i}
-                  type="button"
-                  onClick={() => setFotoSel(i)}
-                  aria-label={`Ver foto ${i + 1}`}
-                  aria-current={i === fotoAtual}
-                  className={cn(
-                    "h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 bg-white transition-colors",
-                    i === fotoAtual ? "border-primary" : "border-border hover:border-primary/60",
-                  )}
-                >
-                  <img
-                    src={foto}
-                    alt=""
-                    loading="lazy"
-                    width={160}
-                    height={160}
-                    className="h-full w-full object-contain p-1"
-                  />
-                </button>
-              ))}
+            <div className="no-scrollbar mt-3 scroll-smooth overflow-x-auto pb-2">
+              <div className="mx-auto flex w-max gap-2">
+                {fotos.map((foto, i) => (
+                  <button
+                    key={foto + i}
+                    type="button"
+                    onClick={() => setFotoSel(i)}
+                    aria-label={`Ver foto ${i + 1}`}
+                    aria-current={i === fotoAtual}
+                    className={cn(
+                      "h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 bg-white transition-colors",
+                      i === fotoAtual ? "border-primary" : "border-border hover:border-primary/60",
+                    )}
+                  >
+                    <img
+                      src={foto}
+                      alt=""
+                      loading="lazy"
+                      width={160}
+                      height={160}
+                      className="h-full w-full object-contain p-1"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
 
-        <div>
+        <div className="min-w-0">
           <div className="flex items-center gap-2">
             {marca && (
               <span className="rounded bg-primary/15 px-2.5 py-1 text-[10px] font-extrabold tracking-widest text-primary uppercase">

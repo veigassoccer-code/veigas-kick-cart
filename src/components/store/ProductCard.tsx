@@ -12,7 +12,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
     navigate({ to: "/produto/$id", params: { id: produto.id } });
 
   return (
-    <div className="group flex w-60 shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary sm:w-full">
+    <div className="group flex w-full flex-col justify-between overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary">
       {/* Foto em fundo claro com botões flutuantes */}
       <div className="relative aspect-square overflow-hidden bg-white">
         <Link
@@ -57,7 +57,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
       <Link
         to="/produto/$id"
         params={{ id: produto.id }}
-        className="flex flex-1 flex-col gap-1 p-4"
+        className="flex flex-1 flex-col gap-1 p-3 sm:p-4"
       >
         {marca && (
           <span className="text-[10px] font-extrabold tracking-widest text-muted-foreground uppercase">
