@@ -47,7 +47,7 @@
 @theme {
   --font-display: "Anton", "Archivo", sans-serif;
   --font-sans: "Archivo", system-ui, sans-serif;
-  --animate-marquee: marquee 22s linear infinite;
+  --animate-marquee: marquee 25s linear infinite;
   --animate-pulse-glow: pulse-glow 2.4s ease-in-out infinite;
 
   @keyframes marquee {
